@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html style="scroll-behavior: smooth;">
+<head>
+  <title>My Resume</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+	
+    /* Reset and variables */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --background-color: #f8f8f8;
+      --text-color: #333;
+      --header-background: #333;
+      --header-text: #fff;
+      --accent-color: #007bff;
+    }
+
+    .dark-mode {
+      --background-color: #222;
+      --text-color: #eee;
+      --header-background: #111;
+      --header-text: #eee;
+      --accent-color: #007bff;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--header-background);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .logo img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav li {
+      margin: 0;
+    }
+
+    nav a {
+      color: var(--header-text);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background-color: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    /* Dark mode toggle */
+    .dark-mode-toggle {
+      margin-left: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Toggle switch styles */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    /* Sections */
+    section {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Profile pic + name grid */
+    #home > div {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    h1, h2 {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 0.7rem;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: var(--header-background);
+      color: var(--header-text);
+      text-align: center;
+      padding: 1rem 0;
+      margin-top: auto;
+    }
+
+    /* Hamburger menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 25px;
+      gap: 5px;
+      margin-left: 1rem;
+    }
+
+    .hamburger div {
+      background-color: var(--header-text);
+      height: 3px;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        padding: 1rem;
+      }
+
+      nav ul {
+        flex-direction: column;
+        width: 100%;
+        display: none; /* Hidden by default */
+        margin-top: 1rem;
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+
+      nav li {
+        margin: 0.5rem 0;
+      }
+
+      #home > div {
+        grid-template-columns: 1fr !important;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .profile-pic {
+        width: 90px;
+        height: 90px;
+      }
+
+      section {
+        margin: 1rem 1rem;
+        padding: 1.5rem;
+      }
+
+      .dark-mode-toggle {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    @media (min-width: 769px) {
+      /* About and Skills side-by-side */
+      #about, #skills {
+        display: inline-block;
+        vertical-align: top;
+        width: 48%;
+        margin-right: 2%;
+      }
+      #skills {
+        margin-right: 0;
+      }
+      /* Projects and Contact full width below */
+      #projects, #contact {
+        max-width: 800px;
+        margin: 2rem auto;
+      }
+	  /* Smooth transition for dark mode and elements */
+body, section, header, footer {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animate section fade-in */
+section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: transform, opacity;
+}
+
+/* Active class to trigger animation */
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide-in nav links on load */
+nav ul li {
+  animation: slideIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+nav ul li:nth-child(1) { animation-delay: 0.1s; }
+nav ul li:nth-child(2) { animation-delay: 0.2s; }
+nav ul li:nth-child(3) { animation-delay: 0.3s; }
+nav ul li:nth-child(4) { animation-delay: 0.4s; }
+nav ul li:nth-child(5) { animation-delay: 0.5s; }
+nav ul li:nth-child(6) { animation-delay: 0.6s; }
+
+/* Hover effect for skills and projects */
+#skills ul li,
+#projects ul li {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#skills ul li:hover,
+#projects ul li:hover {
+  transform: translateX(8px);
+  color: var(--accent-color);
+}
+
+.skill {
+  margin-bottom: 1.5rem;
+}
+
+.skill span {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 20px;
+  width: 100%;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress {
+  background-color: var(--accent-color);
+  height: 100%;
+  width: 0%;
+  transition: width 1.2s ease-in-out;
+  border-radius: 10px;
+}
+
+.typing-text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid var(--accent-color);
+  width: 0;
+  animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+  margin-top: 0.5rem;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: var(--accent-color); }
+}
+
+.download-container {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.download-btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.floating-download {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  z-index: 1000;
+}
+
+.floating-download:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.parallax-section {
+  background-image: url('5153829.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 6rem 1rem;
+  color: white;
+  position: relative;
+  text-align: center;
+}
+
+.parallax-section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* dark overlay for better readability */
+  z-index: 1;
+}
+
+.home-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.parallax-section .profile-pic {
+  border: 4px solid white;
+}
+
+#scrollToTop {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 1000;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#scrollToTop:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+}
+
+.stats-section {
+  background: var(--background-color);
+  color: var(--text-color);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.counter-box {
+  flex: 1 1 200px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.dark-mode .counter-box {
+  background-color: #2a2a2a;
+}
+
+.counter-box:hover {
+  transform: translateY(-5px);
+}
+
+.counter {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.social-icons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.social-icons a {
+  color: var(--header-text);
+  font-size: 1.4rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.3);
+  color: var(--accent-color);
+}
+
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+#loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Spinner styles */
+#loader::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border: 6px solid var(--accent-color);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+    }
+  </style>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  integrity="sha512-yC1b1Av0TDvM43TezJkPRwYfXxOAOez8w5D+yCQcBbTZ+Tix3pIj5eM7Zb3TuZhLrPzv6hG+06M87ERf8cL1Uw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
+</head>
+<body>
+	<div id="loader"></div>
+
+	<a href="resume.pdf" download class="floating-download" title="Download Resume">⬇</a>
+<button id="scrollToTop" title="Go to top">↑</button>
+
+  <header>
+    <div class="logo">
+      <img src="android-chrome-512x512.png" alt="Resume Logo" />
+    </div>
+
+    <nav>
+      <ul id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="dark-mode-toggle">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle" aria-label="Toggle dark mode" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" tabindex="0" role="button">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <section id="home" class="parallax-section" class="reveal">
+  <div class="home-content">
+    <img src="6138450711114007975_121.jpg" alt="Mark Dave D. Aguab" class="profile-pic" />
+    <h1>Aguab, Mark Dave D.</h1>
+    <p class="typing-text"></p>
+  </div>
+</section>
+
+
+
+  <section id="about" class="reveal">
+    <h2>About Me</h2>
+    <p>A highly motivated and intellectually curious student with a passion for environmental science and a strong academic record, I am eager to contribute to the vibrant community at Data Center of The Philippines. My involvement in sports has instilled in me a deep appreciation for collaborative work and problem-solving. I am particularly interested in exploring Web Development and believe DCCP's teaching will provide an ideal environment for my academic growth.</p>
+    <p><strong>My Hobbies:</strong></p>
+    <ul>
+      <li>Basketball</li>
+      <li>Volleyball</li>
+      <li>Reading Manga/Comics</li>
+      <li>Drawing/Sketching</li>
+      <li>Adventure</li>
+    </ul>
+  </section>
+
+  <section id="education" class="reveal">
+    <h2>Education</h2>
+    <ul>
+      <li><strong>Aurora Hill Center</strong> - Kinder (Grad: 2009)</li>
+      <li><strong>Ambiong Elementary School</strong> - Grades 1-6 (Grad: 2014-2015)</li>
+      <li><strong>Magsaysay National High School</strong> - Grade 7 (2016)</li>
+      <li><strong>Ambiong National High School</strong> - Grades 8-10 (Grad: 2018-2019)</li>
+      <li><strong>La Trinidad National High School</strong> - Grades 11-12 (Humanities and Social Science) (Grad: 2021-2022)</li>
+      <li><strong>Data Center College of the Philippines</strong> - Bachelor of Science in Information Technology Major in Web Development, 3rd Year (currently enrolled)</li>
+    </ul>
+  </section>
+
+  <section id="skills" class="reveal">
+  <h2>Skills</h2>
+  <div class="skill">
+    <span>Python</span>
+    <div class="progress-bar"><div class="progress" data-skill="90%"></div></div>
+  </div>
+  <div class="skill">
+    <span>JavaScript</span>
+    <div class="progress-bar"><div class="progress" data-skill="70%"></div></div>
+  </div>
+  <div class="skill">
+    <span>Design</span>
+    <div class="progress-bar"><div class="progress" data-skill="80%"></div></div>
+  </div>
+  <div class="skill">
+    <span>Computer Installation</span>
+    <div class="progress-bar"><div class="progress" data-skill="85%"></div></div>
+  </div>
+</section>
+
+
+  <section id="projects" class="reveal">
+    <h2>Projects</h2>
+    <ul>
+      <li>Arduino (Money Detector) - Assisted with error fixing and parts installation</li>
+      <li>Design (2nd Year Photo) - Editing and enhancement</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="reveal">
+  <h2>Contact</h2>
+  <p>Email: ikawnah211@gmail.com</p>
+  <p>Phone: 09166655415</p>
+
+  <div class="download-container">
+    <a href="resume.pdf" download class="download-btn">Download Resume (PDF)</a>
+  </div>
+</section>
+
+<section id="stats" class="stats-section" class="reveal">
+  <h2>My Achievements</h2>
+  <div class="counter-container">
+    <div class="counter-box">
+      <div class="counter" data-target="3">0</div>
+      <p>Years in College</p>
+    </div>
+    <div class="counter-box">
+      <div class="counter" data-target="7">0</div>
+      <p>Projects Completed</p>
+    </div>
+    <div class="counter-box">
+      <div class="counter" data-target="4">0</div>
+      <p>Languages Learned</p>
+    </div>
+    <div class="counter-box">
+      <div class="counter" data-target="5">0</div>
+      <p>Certificates Earned</p>
+    </div>
+  </div>
+</section>
+
+
+  <footer>
+  <p>&copy; 2025 Aguab, Mark Dave D.</p>
+
+  <div class="social-icons">
+    <a href="https://facebook.com/MD_Aguab_Dumolpan" target="_blank" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://github.com/MD_Aguab_Dumolpan" target="_blank" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://linkedin.com/in/MD_Aguab_Dumolpan" target="_blank" aria-label="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </div>
+</footer>
+
+
+  <script>
+    // Dark mode toggle with localStorage
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const root = document.documentElement;
+
+    darkModeToggle.addEventListener('change', function () {
+      if (this.checked) {
+        root.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        root.classList.remove('dark-mode');
+        localStorage.removeItem('darkMode');
+      }
+    });
+
+    // Initialize dark mode from localStorage
+    if (localStorage.getItem('darkMode') === 'true') {
+      root.classList.add('dark-mode');
+      darkModeToggle.checked = true;
+    }
+
+    // Smooth scroll with offset for fixed header
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const yOffset = -80; // Adjust for sticky header height
+          const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        navLinks.classList.toggle('active');
+      }
+    });
+
+    // Close mobile menu after clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+  </script>
+  <script>
+  // Fade-in on scroll using IntersectionObserver
+  const sections = document.querySelectorAll('section');
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target); // Animate once
+      }
+    });
+  }, { threshold: 0.1 });
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+</script>
+<script>
+  // Animate skill bars on scroll into view
+  const skillBars = document.querySelectorAll('.progress');
+
+  const skillObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const progress = entry.target;
+        const value = progress.getAttribute('data-skill');
+        progress.style.width = value;
+        observer.unobserve(progress);
+      }
+    });
+  }, { threshold: 0.6 });
+
+  skillBars.forEach(bar => {
+    skillObserver.observe(bar);
+  });
+</script>
+
+<script>
+  // Typing animation text
+  const typingText = document.querySelector('.typing-text');
+  const messages = ["Aspiring Web Developer", "Passionate Learner", "Team Player & Problem Solver"];
+  let index = 0;
+
+  function typeMessage() {
+    typingText.style.width = '0';
+    typingText.innerHTML = messages[index];
+    typingText.style.animation = 'none';
+
+    // Force reflow to restart animation
+    void typingText.offsetWidth;
+
+    typingText.style.animation = 'typing 3s steps(30, end) forwards, blink 0.7s step-end infinite';
+
+    index = (index + 1) % messages.length;
+  }
+
+  typeMessage();
+  setInterval(typeMessage, 4000); // Change every 4 seconds
+</script>
+
+<script>
+  const scrollToTopBtn = document.getElementById("scrollToTop");
+
+  // Show the button when user scrolls down
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.style.display = "block";
+    } else {
+      scrollToTopBtn.style.display = "none";
+    }
+  });
+
+  // Scroll to top smoothly
+  scrollToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
+
+<script>
+  const counters = document.querySelectorAll('.counter');
+  let counterAnimated = false;
+
+  function animateCounters() {
+    if (counterAnimated) return;
+
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const speed = 200; // lower is faster
+
+      const update = () => {
+        const current = +counter.innerText;
+        const increment = Math.ceil(target / speed);
+
+        if (current < target) {
+          counter.innerText = current + increment;
+          setTimeout(update, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+
+      update();
+    });
+
+    counterAnimated = true;
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+      }
+    });
+  }, { threshold: 0.4 });
+
+  const statsSection = document.querySelector('#stats');
+  statsObserver.observe(statsSection);
+</script>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+
+  const revealOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target); // Animate only once
+      }
+    });
+  }, { threshold: 0.2 });
+
+  reveals.forEach(section => {
+    revealOnScroll.observe(section);
+  });
+</script>
+
+<script>
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    loader.classList.add('hidden');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 600); // Wait for fade out
+  });
+</script>
+
+</body>
+</html>
